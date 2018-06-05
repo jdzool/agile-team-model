@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 15 12:48:59 2018
-
 @author: jondowning
+
+Example from: http://simpy.readthedocs.io/
 """
 
 import random
 
 import simpy
 
-
+# Input variables 
 RANDOM_SEED = 42
 NUM_MACHINES = 2  # Number of machines in the carwash
 WASHTIME = 5      # Minutes it takes to clean a car

@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 15 12:39:39 2018
-
 @author: jondowning
-"""
 
-"""
 Possible variables 
 -- Size of different teams: 
     BA 
@@ -21,15 +17,18 @@ import numpy.random as random
 import numpy as np
 
 class Team(simpy.Resource):
-    """A team consistents of a number of workers (``` NUM_WORKERS ```). 
+    """A team consistents of a number of workers (``` num_workers ```). 
     Additional workers aid the speed with which epics are completed. 
     
-    Each team has a work rate (``` WORK_RATE ```) which is the rate
-    at which tickets can be completed. 
+    Each worker has a work rate (``` work_rate ```) which is the rate
+    at which tickets can be completed by that team. 
+    
+    The total work rate for each team is calculated from 
+    `` num_workers ``` *  ``` work_rate ``` 
 
-    Tickets are request time from workers when they got one, they
+    Tickets are request time from workers. When time is found, they
     can start the processes and wait for it to finish (which
-    takes ``PROCESS_TIME`` minutes).
+    takes ``PROCESS_TIME`` units).
 
     """
     def __init__(self, env, num_workers, work_rate, name):

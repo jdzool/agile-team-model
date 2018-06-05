@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 29 12:24:57 2018
-
 @author: jondowning
-"""
 
-"""
 The best method to get data out of the system is to monitor
 http://simpy.readthedocs.io/en/latest/topical_guides/monitoring.html
 
