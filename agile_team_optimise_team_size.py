@@ -10,42 +10,6 @@ Optimisation
 from scipy.optimize import minimize
 from skopt import gp_minimize
 
-inputs = {'weeks': "",
-        'amount_of_epics': "",
-        'size_ba':1,
-        'pace_ba':"",
-        'size_data_ba':2,
-        'pace_data_ba':"",
-        'size_data_eng':3,
-        'pace_data_eng':"",
-        'size_qa':1,
-        'pace_qa':"",
-        'cost':"" 
-          }
-          
-input_abstraction = [inputs['size_ba'], inputs['size_data_ba'], \
-    inputs['size_data_eng'], inputs['size_qa']]
-
-# Output is time, input is cost
-# minimise time         
-
-global g_cost_per_epic
-global g_final_time
-global g_team_size
-global g_amount_ba
-global g_amount_dba
-global g_amount_data_eng
-global g_amount_qa
-
-g_cost_per_epic = []
-g_final_time = []
-g_team_size = []
-g_amount_ba = []
-g_amount_dba = []
-g_amount_data_eng = []
-g_amount_qa = []
-
-
 def agile_des(input_abstraction):
 
     import datetime 
@@ -138,8 +102,6 @@ def agile_des(input_abstraction):
                 yield env.process(team.process(name, epic_size))
                 data_dict[name]['leaves'].append((team.name, env.now))
                 #print('%s leaves the %s at %.2f.' % (name, team.name, env.now))
-        
-    
     
     # Setup and start the simulation
     print('Process Flow')
@@ -185,38 +147,7 @@ def agile_des(input_abstraction):
     cost = team_size*last_time*5*1000
 
     
-    # minimise queue lengths -- maximise value? 
-    total_queue = []
-    for team in team_list:
-        team,queue = map(list, zip(*team.queue_length))   
-        total_queue.append(np.sum(queue))
-    total_queue = np.sum(total_queue)
-    
-    cost_per_epic = cost / len(data_dict.keys()) 
-    queue_penality = total_queue*100
-    
-    loss_function = cost_per_epic + queue_penality
-    
-    print('%s epics were processed' %(int(''.join(filter(str.isdigit, last_epic)))+1))
-    print('The final time is: %.2d weeks' %last_time)
-    print('The cost per epic is: £%.2d K' %(cost_per_epic/1000))
-    print('The queue penality is: £%.2d K' %(queue_penality/1000))
-    print('The loss function is: £%.2d K' %(loss_function/1000))
-    print('\n')
-    print('The team size is: %s' %team_size)
-    print('There are %s BAs' %ba.num_workers)
-    print('There are %s Data BAs' %data_ba.num_workers)
-    print('There are %s Data Engineers' %data_engineering.num_workers)
-    print('There are %s Data QAs' %qa.num_workers)
-    
-    
-    g_cost_per_epic.append(cost_per_epic/1000)
-    g_final_time.append(last_time)
-    g_team_size.append(team_size)
-    g_amount_ba.append(ba.num_workers)
-    g_amount_dba.append(data_ba.num_workers)
-    g_amount_data_eng.append(data_engineering.num_workers)
-    g_amount_qa.append(qa.num_workers)
+
     
     # plots! 
     
@@ -288,42 +219,9 @@ def agile_des(input_abstraction):
 #                options={'disp': True})
 
 
-dimensions = [(1,10),(1,10),(1,10),(1,10)]
-res = gp_minimize(agile_des, 
-                  dimensions,                 
-                  n_calls=40, 
-                  x0=input_abstraction)
-
-from skopt.plots import plot_convergence
-plot_convergence(res)
-
-import numpy as np
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(10,8))
-x = np.arange(0,len(g_cost_per_epic))
-ax.plot(x, g_cost_per_epic, 'r', label = 'Cost per epic')
-plt.xlabel('Iteration of optimisation')
-plt.ylabel('£ K')
-plt.legend()
-plt.savefig('Summary_cost_per_epic.png', dpi=400)
-
-fig, ax = plt.subplots(figsize=(10,8))
-x = np.arange(0,len(g_cost_per_epic))
-ax.plot(x, g_final_time, 'r', label = 'Final time (weeks)')
-plt.xlabel('Iteration of optimisation')
-plt.ylabel('Weeks')
-plt.legend()
-plt.savefig('Summary_cost.png', dpi=400)
 
 
-fig, ax = plt.subplots(figsize=(10,8))
-x = np.arange(0,len(g_cost_per_epic))
-ax.plot(x, g_amount_ba, 'r', label = 'Amount of BAs')
-ax.plot(x, g_amount_dba, 'g', label = 'Amount of Data BAs')
-ax.plot(x, g_amount_data_eng, 'b', label = 'Amount of Data Engineers')
-ax.plot(x, g_amount_qa, 'm', label = 'Amount of QAs')
-plt.xlabel('Iteration of optimisation')
-plt.ylabel('Count')
-plt.legend()
-plt.savefig('Summary_team_shape.png', dpi=400)
+
+
+
 
