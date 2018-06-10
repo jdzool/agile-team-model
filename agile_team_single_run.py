@@ -3,15 +3,12 @@
 """
 @author: jondowning
 
-SimPy Simulation for estimating 
-the time to complete an agile project 
-
+SimPy Simulation for estimating the time to complete an agile project 
 
 Possible variables 
 -- Size of different teams
 -- Pace of work 
 -- Length of epics 
-
 """
 
 import simpy
@@ -19,6 +16,7 @@ import numpy.random as random
 import numpy as np
 import json
 import pickle
+import os 
 
 class Team(simpy.Resource):
     """A team consistents of a number of workers (``` num_workers ```). 
@@ -82,16 +80,16 @@ def epic(env, name, epic_size, team_list, data_dict):
     
     for team in team_list: 
         data_dict[name]['arrives'].append((team.name, env.now))
-        print('%s arrives at the %s at time %.2f.' % (name, team.name, env.now))
+        print('%s arrives at the %s at time %.2f' % (name, team.name, env.now))
         with team.request() as req:
             
             yield req
             data_dict[name]['enters'].append((team.name, env.now))
-            print('%s enters the %s at time %.2f.' % (name, team.name, env.now))
+            print('%s enters the %s at time %.2f' % (name, team.name, env.now))
             
             yield env.process(team.process(name, epic_size))
             data_dict[name]['leaves'].append((team.name, env.now))
-            print('%s leaves the %s at %.2f.' % (name, team.name, env.now))
+            print('%s leaves the %s at %.2f' % (name, team.name, env.now))
     
 
 data_headers = ['name', 'arrives_ba', 'arrives_data_ba', \
@@ -140,9 +138,13 @@ years = 3
 env.run(until=years*52)
 
 # Save data out
-with open('agile_team_model_output_results.json', 'w') as fp:
-    json.dump(data_dict, fp)
+output_dir = "./data/"
 
-with open('agile_team_model_input_team_list.p', 'wb') as f:
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+with open(output_dir + 'agile_team_model_output_results.json', 'w') as f:
+    json.dump(data_dict, f)
+
+with open(output_dir + 'agile_team_model_input_team_list.p', 'wb') as f:
     pickle.dump(team_list, f)
-
