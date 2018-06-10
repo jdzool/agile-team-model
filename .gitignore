@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# Outputs 
+data/*
+graphs/*
+
+
 # Distribution / packaging
 .Python
 build/
@@ -71,6 +76,9 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+#vscode
+.vscode/
 
 # pyenv
 .python-version

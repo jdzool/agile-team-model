@@ -24,7 +24,9 @@ There are two methods to run the code
 - Optimisation for team size (given defined cost function and project size)
 
 Default parameters: 
+
 Our current team consists of the following role; BA, Data BA, Data Engineering, Data QA
+
 The shape of our scrum board is BA, Data BA, Data Engineering, Data QA, Data BA (validation / handover)
 
 ## Defined cost function 
