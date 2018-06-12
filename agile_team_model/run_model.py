@@ -22,6 +22,15 @@ def run_model(input_abstraction):
 
     size_ba, size_data_ba, size_data_eng, size_qa = input_abstraction
 
+    path_queue = "./team_queue/"
+    path_epic = "./epic_progress/"
+
+    if not os.path.exists(path_queue):
+        os.makedirs(path_queue)
+
+    if not os.path.exists(path_epic):
+        os.makedirs(path_epic)
+
     class Team(simpy.Resource):
         """A team consistents of a number of workers (``` num_workers ```). 
         Additional workers aid the speed with which epics are completed. 
@@ -127,7 +136,7 @@ def run_model(input_abstraction):
     # 3) Create backlog
     epic_list = []
 
-    for i in range(10):
+    for i in range(3):
         # Could make epics random lengths (or not!)
         # epic_size = random.uniform(1,6)
         epic_size = 2
@@ -142,7 +151,7 @@ def run_model(input_abstraction):
     env.run(until=years*52)
 
     # Save data out
-    output_dir = "./data/"
+    # output_dir = "./data/"
 
     # Calculate cost 
     # Find time when team is finished 
@@ -190,10 +199,9 @@ def run_model(input_abstraction):
     g_amount_qa.append(qa.num_workers)
 
     # Plots:
-    from plots import plots_queue_len, plot_epic_progress
-
-    plots_queue_len(data_dict, team_list, ba, data_ba, data_engineering, qa, )
-    plot_epic_progress(data_dict, ba, data_ba, data_engineering, qa, path_out)
+    from agile_team_model  import plots
+    plots.plot_queue_len(data_dict, team_list, ba, data_ba, data_engineering, qa, path_queue)
+    plots.plot_epic_progress(data_dict, ba, data_ba, data_engineering, qa, path_epic)
 
     return loss_function
 
