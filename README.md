@@ -20,15 +20,17 @@ Tickets are request time from workers. When time is found, they can start the pr
 ## Running the code 
 
 There are two methods to run the code 
-- A single run for a defined project size 
-- Optimisation for team size (given defined cost function and project size)
+- A single run for a defined project size (```run_model_once_example.py```)
+- Optimisation for team size (given defined cost function and project size) (```main.py```)
 
 Default parameters: 
 
-Our current team consists of the following role; BA, Data BA, Data Engineering, Data QA
+The current team consists of the following roles; BA, Data BA, Data Engineering, Data QA
 
 The shape of our scrum board is BA, Data BA, Data Engineering, Data QA, Data BA (validation / handover)
 
 ## Defined cost function 
+
+Optimisation is conducted against a ```loss_function```. This was created using the ```cost_per_epic``` a value which considers the average cost of the team and time to complete an epic. A ```queue_penality``` is added to the  addition loss function KPI in order to penalise long queues being formed in the system. In this case the optimisation attempts to minimise the size of the ```loss_function```. 
 
 
