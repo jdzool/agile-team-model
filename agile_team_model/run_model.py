@@ -20,11 +20,17 @@ def run_model(input_abstraction):
     import pickle
     import os
 
+    import globals 
+    # Initialise global variables 
+    globals.initialise_variables()
+
     size_ba, size_data_ba, size_data_eng, size_qa = input_abstraction
 
+    # Hard codes as in main.py
     path_queue = "./team_queue/"
     path_epic = "./epic_progress/"
 
+    # If not made, create
     if not os.path.exists(path_queue):
         os.makedirs(path_queue)
 
@@ -109,7 +115,7 @@ def run_model(input_abstraction):
                     'arrives_data_eng', 'arrives_qa', 'arrives_handover']
 
     # Unsure how else to access these variables (use global for now)
-    global data_dict               
+      
     data_dict = {}
 
     # Setup and start the simulation

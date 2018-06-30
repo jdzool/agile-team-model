@@ -11,9 +11,6 @@ from scipy.optimize import minimize
 from skopt import gp_minimize
 
 def agile_des(input_abstraction):
-
-    import datetime 
-    time_str = str(datetime.datetime.now())
     
     import simpy
     import numpy.random as random 
@@ -21,7 +18,10 @@ def agile_des(input_abstraction):
     import matplotlib.pyplot as plt
     from collections import OrderedDict
     import pandas as pd 
+    import os
+
     
+
     
     class Team(simpy.Resource):
         """A team consistents of a number of workers (``` NUM_WORKERS ```). 
