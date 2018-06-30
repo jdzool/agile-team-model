@@ -112,4 +112,4 @@ venv.bak/
 .mypy_cache/
 
 # output images
-.png
+*.png

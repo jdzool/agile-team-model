@@ -2,8 +2,6 @@
 @author: jondowning
 """
 
-
-
 if __name__ == "__main__":
 
     # Still to explore -- different optimisation methods 
@@ -13,11 +11,11 @@ if __name__ == "__main__":
     import os
     import shutil
 
+    # Import model module  
+    from agile_team_model import run_model, plots
+
     # Initialise global variables 
     globals.initialise_variables()
-
-    # Import run model 
-    from agile_team_model import run_model, plots
 
     # Inputs 
     inputs = {
@@ -30,7 +28,7 @@ if __name__ == "__main__":
     
     # This is all setup: 
 
-    # Delete 
+    # Define output folders  
     paths = ["./team_queue/", "./epic_progress/", "./data"]
 
     # Delete down the outputs folders
@@ -39,15 +37,14 @@ if __name__ == "__main__":
             shutil.rmtree(path)
 
     # All plots should be able to be created from data captured in global varibales
-    g_cost_per_epic = []
-    g_final_time = []
-    g_team_size = []
-    g_amount_ba = []
-    g_amount_dba = []
-    g_amount_data_eng = []
-    g_amount_qa = []
-
-    amount_of_epics = inputs['amount_of_epics']
+    globals.g_cost_per_epic = []
+    globals.g_final_time = []
+    globals.g_team_size = []
+    globals.g_amount_ba = []
+    globals.g_amount_dba = []
+    globals.g_amount_data_eng = []
+    globals.g_amount_qa = []
+    globals.amount_of_epics = inputs['amount_of_epics']
 
 
 
@@ -56,17 +53,21 @@ if __name__ == "__main__":
         inputs['size_data_eng'], inputs['size_qa']]
 
     # Limitations on input_abstraction 
-    dimensions = [(1,10),(1,10),(1,10),(1,10)]
+    dimensions = [(1,6),(1,6),(1,6),(1,6)]
  
     # Run the optimisation 
     res = gp_minimize(run_model.run_model, 
                     dimensions,                 
-                    n_calls=40, 
+                    n_calls=15, 
                     x0=input_abstraction)
 
     # Plot the data out
     plot_convergence(res)
 
-    plots.plot_cost_per_optimisation(g_cost_per_epic)
-    plots.plot_cost_per_epic_weeks(g_cost_per_epic, g_final_time)
-    plots.plot_team_shape(g_cost_per_epic, g_amount_ba, g_amount_dba, g_amount_data_eng, g_amount_qa)
+    plots.plot_cost_per_optimisation(globals.g_cost_per_epic)
+    plots.plot_cost_per_epic_weeks(globals.g_cost_per_epic, globals.g_final_time)
+    plots.plot_team_shape(globals.g_cost_per_epic, globals.g_amount_ba, \
+                                globals.g_amount_dba, globals.g_amount_data_eng, globals.g_amount_qa)
+
+    # TODO -- could dump data into data folder 
+    # TODO use data output as for standard test

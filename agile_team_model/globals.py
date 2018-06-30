@@ -3,10 +3,9 @@
 
 # Is there an easier method than using global variables? 
 # Could we solve with a results (class) object?
-# How does an additional object fit within the optimisation algorithm 
+# Would an additional object fit within the optimisation algorithm?? 
 
 def initialise_variables():
-
     global amount_of_epics
     global data_dict
     global g_cost_per_epic

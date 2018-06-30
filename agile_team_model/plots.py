@@ -47,7 +47,7 @@ def plot_queue_len(data_dict, team_list, ba, data_ba, data_engineering, qa, path
         plt.xlabel('Time (weeks)')
         plt.ylabel('Queue length (epics)')
         plt.tight_layout()
-    plt.savefig('queues.png', dpi=400)
+    plt.savefig('./team_queue/' + time_str + '_queues.png', dpi=400)
 
 
 def plot_epic_progress(data_dict, ba, data_ba, data_engineering, qa, path_out):
@@ -103,9 +103,7 @@ def plot_epic_progress(data_dict, ba, data_ba, data_engineering, qa, path_out):
         plt.legend(by_label.values(), by_label.keys())
         plt.xlabel('Time (weeks)')
         plt.ylabel('Epic (#)')
-    plt.savefig('team_list.png', dpi=400)
-
-    plt.show()
+    plt.savefig("./epic_progress/" + time_str + '_team_list.png', dpi=400)
 
 
 def plot_cost_per_optimisation(g_cost_per_epic):
@@ -119,7 +117,10 @@ def plot_cost_per_optimisation(g_cost_per_epic):
     plt.legend()
     plt.savefig('Summary_cost_per_epic.png', dpi=400)
 
+
 def plot_cost_per_epic_weeks(g_cost_per_epic, g_final_time):
+    import matplotlib.pyplot as plt
+    import numpy as np
     fig, ax = plt.subplots(figsize=(10,8))
     x = np.arange(0,len(g_cost_per_epic))
     ax.plot(x, g_final_time, 'r', label = 'Final time (weeks)')
@@ -128,7 +129,10 @@ def plot_cost_per_epic_weeks(g_cost_per_epic, g_final_time):
     plt.legend()
     plt.savefig('Summary_cost.png', dpi=400)
 
+
 def plot_team_shape(g_cost_per_epic, g_amount_ba, g_amount_dba, g_amount_data_eng, g_amount_qa):
+    import matplotlib.pyplot as plt
+    import numpy as np
     fig, ax = plt.subplots(figsize=(10,8))
     x = np.arange(0,len(g_cost_per_epic))
     ax.plot(x, g_amount_ba, 'r', label = 'Amount of BAs')

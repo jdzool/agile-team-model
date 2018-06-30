@@ -1,17 +1,4 @@
 TODO
 
-Parameterise inputs 
 Create test data set 
 Create standard test 
-
-
-Notes: 
-
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-with open(output_dir + 'agile_team_model_output_results.json', 'w') as f:
-    json.dump(data_dict, f)
-
-with open(output_dir + 'agile_team_model_input_team_list.p', 'wb') as f:
-    pickle.dump(team_list, f)

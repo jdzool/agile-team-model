@@ -19,10 +19,12 @@ def run_model(input_abstraction):
     import json
     import pickle
     import os
-
-    import globals 
+    
+    from agile_team_model  import plots
+    from agile_team_model import globals 
     # Initialise global variables 
     globals.initialise_variables()
+
 
     size_ba, size_data_ba, size_data_eng, size_qa = input_abstraction
 
@@ -99,16 +101,16 @@ def run_model(input_abstraction):
         
         for team in team_list: 
             data_dict[name]['arrives'].append((team.name, env.now))
-            print('%s arrives at the %s at time %.2f' % (name, team.name, env.now))
+            #print('%s arrives at the %s at time %.2f' % (name, team.name, env.now))
             with team.request() as req:
                 
                 yield req
                 data_dict[name]['enters'].append((team.name, env.now))
-                print('%s enters the %s at time %.2f' % (name, team.name, env.now))
+                #print('%s enters the %s at time %.2f' % (name, team.name, env.now))
                 
                 yield env.process(team.process(name, epic_size))
                 data_dict[name]['leaves'].append((team.name, env.now))
-                print('%s leaves the %s at %.2f' % (name, team.name, env.now))
+                #print('%s leaves the %s at %.2f' % (name, team.name, env.now))
         
 
     data_headers = ['name', 'arrives_ba', 'arrives_data_ba', \
@@ -142,7 +144,7 @@ def run_model(input_abstraction):
     # 3) Create backlog
     epic_list = []
 
-    for i in range(3):
+    for i in range(globals.amount_of_epics):
         # Could make epics random lengths (or not!)
         # epic_size = random.uniform(1,6)
         epic_size = 2
@@ -156,8 +158,7 @@ def run_model(input_abstraction):
     # Execute!
     env.run(until=years*52)
 
-    # Save data out
-    # output_dir = "./data/"
+    # Save data out?
 
     # Calculate cost 
     # Find time when team is finished 
@@ -196,16 +197,15 @@ def run_model(input_abstraction):
     print('There are %s Data Engineers' %data_engineering.num_workers)
     print('There are %s Data QAs' %qa.num_workers)
     
-    g_cost_per_epic.append(cost_per_epic/1000)
-    g_final_time.append(last_time)
-    g_team_size.append(team_size)
-    g_amount_ba.append(ba.num_workers)
-    g_amount_dba.append(data_ba.num_workers)
-    g_amount_data_eng.append(data_engineering.num_workers)
-    g_amount_qa.append(qa.num_workers)
+    globals.g_cost_per_epic.append(cost_per_epic/1000)
+    globals.g_final_time.append(last_time)
+    globals.g_team_size.append(team_size)
+    globals.g_amount_ba.append(ba.num_workers)
+    globals.g_amount_dba.append(data_ba.num_workers)
+    globals.g_amount_data_eng.append(data_engineering.num_workers)
+    globals.g_amount_qa.append(qa.num_workers)
 
     # Plots:
-    from agile_team_model  import plots
     plots.plot_queue_len(data_dict, team_list, ba, data_ba, data_engineering, qa, path_queue)
     plots.plot_epic_progress(data_dict, ba, data_ba, data_engineering, qa, path_epic)
 
