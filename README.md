@@ -9,13 +9,13 @@ The outputs of this model are learnings related to:
 - Practical understanding and framing of constraint type problems within our teams. Many ideas relate to the topics covered in The Goal (https://en.wikipedia.org/wiki/The_Goal_(novel)) 
 
 ## Concepts 
-A team consistents of a number of workers (``` num_workers ```). Additional workers aid the speed with which epics are completed. 
+- A team consistents of a number of workers (``` num_workers ```). Additional workers aid the speed with which epics are completed. 
 
-Each worker has a work rate (``` work_rate ```) which is the rate at which tickets can be completed by that team. 
+- Each worker has a work rate (``` work_rate ```) which is the rate at which tickets can be completed by that team. 
 
-The total work rate for each team is calculated from ``` num_workers ``` *  ``` work_rate ``` 
+- The total work rate for each team is calculated from ``` num_workers ``` *  ``` work_rate ``` 
 
-Tickets are request time from workers. When time is found, they can start the processes and wait for it to finish (which takes ``process_time`` units).
+- Tickets are request time from workers. When time is found, they can start the processes and wait for it to finish (which takes ``process_time`` units).
 
 ## Running the code 
 
@@ -24,11 +24,10 @@ There are two methods to run the code
 - Optimisation for team size (given defined cost function and project size) (```main.py```)
 
 Default parameters: 
-
-The current team consists of the following roles; BA, Data BA, Data Engineering, Data QA
-The shape of our scrum board is: BA, Data BA, Data Engineering, Data QA, Data BA (validation / handover)
-The workrate of our subteams is defined in ```agile_team_model\run_model```
-The starting amount of team members in our project groups is defined in ```main.py```
+- The current team consists of the following roles; BA, Data BA, Data Engineering, Data QA
+- The shape of our scrum board is: BA, Data BA, Data Engineering, Data QA, Data BA (validation / handover)
+- The workrate of our subteams is defined in ```agile_team_model\run_model```
+- The starting amount of team members in our project groups is defined in ```main.py```
 
 ## Defined cost function 
 
