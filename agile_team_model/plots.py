@@ -127,7 +127,7 @@ def plot_cost_per_epic_weeks(g_cost_per_epic, g_final_time):
     plt.xlabel('Iteration of optimisation')
     plt.ylabel('Weeks')
     plt.legend()
-    plt.savefig('Summary_cost.png', dpi=400)
+    plt.savefig('Summary_total_time.png', dpi=400)
 
 
 def plot_team_shape(g_cost_per_epic, g_amount_ba, g_amount_dba, g_amount_data_eng, g_amount_qa):

@@ -9,7 +9,11 @@ __pycache__/
 # Outputs 
 data/*
 graphs/*
+team_queue/*
+epic_progress/*
 
+# output images
+# *.png
 
 # Distribution / packaging
 .Python
@@ -111,5 +115,3 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# output images
-*.png

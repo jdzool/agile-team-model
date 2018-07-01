@@ -27,10 +27,15 @@ Default parameters:
 
 The current team consists of the following roles; BA, Data BA, Data Engineering, Data QA
 
-The shape of our scrum board is BA, Data BA, Data Engineering, Data QA, Data BA (validation / handover)
+The shape of our scrum board is: BA, Data BA, Data Engineering, Data QA, Data BA (validation / handover)
 
 ## Defined cost function 
 
 Optimisation is conducted against a ```loss_function```. This was created using the ```cost_per_epic``` a value which considers the average cost of the team and time to complete an epic. A ```queue_penality``` is added to the  addition loss function KPI in order to penalise long queues being formed in the system. In this case the optimisation attempts to minimise the size of the ```loss_function```. 
 
+## Optimisation
+
+During optimisation two outputs are tracked: the size of the relative queues on each team (see example output: ```example_team_list_epic_progress.png```) and the time at which each team picks up each epic (see example output: ```example_team_list_epic_progress.png```). These graphics are created at each optimsiation step. 
+
+The summary of outputs from the optimisation pass is show in the following images ```Summary_cost_per_epic.png```, ```Summary_team_shape.png```, ```Summary_total_time.png```. These graphics respectively give the user information on how optimisation has proceeded with respect to the total cost, the shape of the team (note: we optimising against our loss function) and the total time taken to complete all epics. Having information on the process of optimisation helps to give the user confidence optimisation has found a globally local solution. 
 
